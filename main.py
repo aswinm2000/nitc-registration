@@ -18,6 +18,38 @@ from flask_cors import CORS
 import traceback
 from db import *
 
+BaseModel = declarative_base()
+app = Flask(__name__)
+app.secret_key = 'asfasfasdasdasda'
+CORS(app)
+
+USERNAME = credentials.Username
+PASSWORD = credentials.Password
+DB_NAME = credentials.Database
+HOST= credentials.Host
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://'+USERNAME+':'+PASSWORD+'@'+HOST+'/'+DB_NAME
+
+engine = create_engine('postgresql+psycopg2://'+USERNAME+':'+PASSWORD+'@'+HOST+'/'+DB_NAME)
+
+db.app = app
+db.init_app(app)
+ma = Marshmallow(app)
+bcrypt = Bcrypt(app)
+
+@hybrid_property
+def hybrid(self):
+    return self._hybrid
+
+@hybrid.setter
+def hybrid(self, value):
+    self._hybrid = value
+
+@hybrid.expression
+def hybrid(cls):
+    return False
 
 @app.route('/login')
 def login():
