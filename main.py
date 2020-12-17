@@ -17,7 +17,7 @@ from flask_marshmallow import Marshmallow
 from flask_cors import CORS
 import traceback
 from db import *
-from credentials import *
+import credentials
 
 BaseModel = declarative_base()
 app = Flask(__name__)
