@@ -72,3 +72,9 @@ def authenticate():
         print()
 
     return render_template('Register.html', title='Register', form=form)
+
+
+
+if (__name__ =="__main__"):
+    app.debug=True
+    app.run(port='8081')
