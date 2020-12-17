@@ -52,7 +52,7 @@ def hybrid(self, value):
 def hybrid(cls):
     return False
 
-@app.route('/login')
+@app.route('/')
 def login():
     session.clear()
     return render_template('Login.html')
@@ -63,15 +63,25 @@ def authenticate():
     if request.method== 'POST':
         username = request.form('username')
         password = request.form('password')
-        print("User authenticated")
-        return (redirect(url_for('view')))
-    elif sentdata.status_code == 401:
-        flash("Wrong password")
+        """"""
+        """USE some method to hash password"""
+        """"""
+        value = db.session.query(user).filter(user.user_name==username)
+
+        try:
+            print(value[0])
+            if value[0].hashed_password == password and value[0].role == role:
+                print("User authenticated")
+                return (redirect(url_for('view')))
+            else:
+                print("Wrong Username/Password")
+        except:
+            print("Wrong Username/Password")
 
     else:
-        print()
+        print("Invalid")
 
-    return render_template('Register.html', title='Register', form=form)
+    return render_template('Login.html')
 
 
 
