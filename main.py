@@ -63,6 +63,7 @@ def authenticate():
     if request.method== 'POST':
         username = request.form('username')
         password = request.form('password')
+        role = request.form('role')
         """"""
         """USE some method to hash password"""
         """"""
